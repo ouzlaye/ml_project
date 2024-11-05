@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: ml-project
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+      - name: frontend
+        image: ouzlaye/ml_project_frontend:7  # Remplace <tag> par le tag de l’image sur Docker Hub
+        ports:
+        - containerPort: 3000
+        env:
+        - name: REACT_APP_BACKEND_URL
+          value: "http://backend:5000"  # URL du backend via le service Kubernetes
